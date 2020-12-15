@@ -20,4 +20,32 @@
 // THE SOFTWARE.
 //
 
-@forward './button-theme';
+// Selector '.mdc-*' should only be used in this project.
+// stylelint-disable selector-class-pattern
+
+@use '@material/feature-targeting/feature-targeting';
+@use './button-theme';
+
+@mixin core-styles($query: feature-targeting.all()) {
+  .mdc-button--outlined {
+    @include outlined_($query: $query);
+  }
+}
+
+@mixin outlined_($query: feature-targeting.all()) {
+  $feat-structure: feature-targeting.create-target($query, structure);
+
+  @include button-theme.outline-width(
+    button-theme.$outlined-border-width,
+    $query: $query
+  );
+  @include button-theme.outline-color(button-theme.$outline-color, $query);
+  @include button-theme.disabled-outline-color(
+    button-theme.$disabled-container-color,
+    $query
+  );
+
+  @include feature-targeting.targets($feat-structure) {
+    border-style: solid;
+  }
+}

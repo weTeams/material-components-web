@@ -20,4 +20,6 @@
 // THE SOFTWARE.
 //
 
-@forward './button-theme';
+@use './button';
+
+@include button.core-styles;
